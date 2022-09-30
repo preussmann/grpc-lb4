@@ -36,7 +36,7 @@ export class GrpcGenerator {
   public execute(): void {
     this.getProtoPaths().forEach((protoPath: string) => {
       const protoName: string = protoPath.split('/').pop() ?? '';
-      this.protos[protoName] = this.loadProto(protoName);
+      this.protos[protoName] = this.loadProto(protoPath);
       this.generate(protoPath);
     });
   }

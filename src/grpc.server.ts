@@ -3,7 +3,7 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-import grpc from '@grpc/grpc-js';
+import * as grpc from '@grpc/grpc-js';
 import {BindingScope, Context, inject} from '@loopback/context';
 import {
   Application,
@@ -67,12 +67,15 @@ export class GrpcServer extends Context implements Server {
   }
 
   async start(): Promise<void> {
-    this.server.bind(
+    this.server.bindAsync(
       `${this.host}:${this.port}`,
       grpc.ServerCredentials.createInsecure(),
+      (err, port) => {
+        if (err) throw err;
+        this.server.start();
+        this._listening = true;
+      }
     );
-    this.server.start();
-    this._listening = true;
   }
 
   async stop(): Promise<void> {

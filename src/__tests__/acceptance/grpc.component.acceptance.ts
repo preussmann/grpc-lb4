@@ -16,9 +16,12 @@ import {
   GrpcServer,
   GrpcService
 } from '../..';
+
 import {
-  Greeter, HelloReply, HelloRequest, TestReply, TestRequest
-} from './fixtures/greeter.proto';
+  Greeter,
+  HelloReply,
+  HelloRequest, TestReply, TestRequest
+} from './greeter.proto';
 
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -142,7 +145,7 @@ function givenApplication(
  * Returns GRPC Client
  **/
 function getGrpcClient(app: Application) {
-  const packageDefinition = loadSync('greeter.proto');
+  const packageDefinition = loadSync('./fixtures/greeter.proto');
   const proto = grpcModule.loadPackageDefinition(packageDefinition)[
     'greeterpackage'
   ] as grpcModule.GrpcObject;;
